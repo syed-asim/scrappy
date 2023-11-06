@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Location Markers on Google Maps</title>
+    <style>
+      #map {
+        height: 800px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var locs = [
+          { place: "The Spirit Tower" },
+          { place: "Roma Giovanni" },
+
+          { place: "Golden Mile, Palm Jumeirah" },
+          { place: "al habool - Dubai" },
+          { place: "Jash Falqa" },
+          { place: "collective 2.0 | Tower B -  dubai" },
+          { place: "Urbana 3 - dubai" },
+          { place: "Kamoon 1, Old Town" },
+          { place: "Damac Upper Crest" },
+          { place: "Manchester Tower" },
+
+          { place: "Boulevard Central" },
+          { place: "Burj Al Nujoom" },
+          { place: "Shoreline 7" },
+          { place: "Street 5" },
+          { place: "Al Murad Tower" },
+
+          { place: "Sadaf 4" },
+
+          { place: "Marina Terrace" },
+
+          { place: "Al Murad" },
+
+          { place: "Majara Tower" },
+
+          { place: "Cayan Tower" },
+
+          { place: null },
+        ];
+
+        const map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: 25.276987, lng: 55.296249 }, // Set the initial center of the map
+          zoom: 10, // Set the initial zoom level
+        });
+
+        const locationNames = [
+          "San Francisco, CA",
+          "Los Angeles, CA",
+          // Add more location names as needed
+        ];
+
+        const geocoder = new google.maps.Geocoder();
+
+        locs.forEach((locationName) => {
+          geocoder.geocode({ address: locationName.place + " dubai UAE" }, (results, status) => {
+            if (status === "OK") {
+              const location = results[0].geometry.location;
+              new google.maps.Marker({
+                position: location,
+                map: map,
+                title: locationName.place, // Optional title for the marker
+              });
+            } else {
+              console.error("Geocoding failed for: " + locationName.place);
+            }
+          });
+        });
+      }
+    </script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=xxx&callback=initMap"
+      async
+      defer
+    ></script>
+  </body>
+</html>
